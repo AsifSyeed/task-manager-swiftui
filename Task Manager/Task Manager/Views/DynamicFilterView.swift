@@ -28,14 +28,18 @@ struct DynamicFilterView<Content: View, T>: View where T: NSManagedObject {
         
         if currentTab == "Today" {
             let today = calendar.startOfDay(for: Date())
-            let tomorrow = calendar.date(bySetting: .day, value: 1, of: today)!
+            let tomorrow = calendar.date(byAdding: .day, value: 1, to: today)!
             predicate = NSPredicate(format: "\(filterKey) >= %@ AND \(filterKey) < %@ AND isCompleted == %i", argumentArray: [today, tomorrow, 0])
         } else if currentTab == "Upcoming" {
-            let today = calendar.startOfDay(for: calendar.date(bySetting: .day, value: 1, of: Date())!)
+            let today = calendar.startOfDay(for: calendar.date(byAdding: .day, value: 1, to: Date())!)
             let tomorrow = Date.distantFuture
             predicate = NSPredicate(format: "\(filterKey) >= %@ AND \(filterKey) < %@ AND isCompleted == %i", argumentArray: [today, tomorrow, 0])
+        } else if currentTab == "Failed" {
+            let today = calendar.startOfDay(for: Date())
+            let past = Date.distantPast
+            predicate = NSPredicate(format: "\(filterKey) >= %@ AND \(filterKey) < %@ AND isCompleted == %i", argumentArray: [past, today, 0])
         } else {
-            
+            predicate = NSPredicate(format: "isCompleted == %i", argumentArray: [1])
         }
         
         // Initialize request with NSPredicate

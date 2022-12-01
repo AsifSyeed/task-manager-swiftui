@@ -85,7 +85,7 @@ struct HomeView: View {
     // MARK: Custom Segmented Bar
     @ViewBuilder
     func customSegmentedBar() -> some View {
-        let tabs = ["Today", "Upcoming", "Done"]
+        let tabs = ["Today", "Upcoming", "Done", "Failed"]
         
         HStack(spacing: 10) {
             ForEach(tabs, id: \.self) { tab in
@@ -143,7 +143,7 @@ struct HomeView: View {
                 Spacer()
                 
                 // MARK: Edit button
-                if !task.isCompleted {
+                if !task.isCompleted && taskViewModel.currentTab != "Failed" {
                     Button {
                         taskViewModel.editTask = task
                         taskViewModel.openEditTask = true
@@ -178,7 +178,7 @@ struct HomeView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
-                if !task.isCompleted {
+                if !task.isCompleted && taskViewModel.currentTab != "Failed" {
                     Button {
                         // MARK: Updating Core Data
                         task.isCompleted.toggle()
