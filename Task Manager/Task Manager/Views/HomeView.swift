@@ -13,6 +13,12 @@ struct HomeView: View {
     // MARK: Matched Geometry Namespace
     @Namespace var animation
     
+    // MARK: Fetching Task List
+    @FetchRequest(entity: Task.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Task.deadline, ascending: false)], predicate: nil, animation: .easeInOut) var tasks: FetchedResults<Task>
+    
+    // MARK: Environment Values
+    @Environment(\.self) var env
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack {
@@ -29,6 +35,7 @@ struct HomeView: View {
                     .padding(.top, 5)
                 
                 // MARK: Task View
+                taskView()
             }
             .padding()
         }
@@ -103,6 +110,91 @@ struct HomeView: View {
                         }
                     }
             }
+        }
+    }
+    
+    // MARK: Task View
+    @ViewBuilder
+    func taskView() -> some View {
+        LazyVStack(spacing: 20) {
+            ForEach(tasks) { task in
+                taskRowView(task: task)
+            }
+        }
+        .padding(.top, 20)
+    }
+    
+    // MARK: Task Row View
+    @ViewBuilder
+    func taskRowView(task: Task) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Text(task.type ?? "")
+                    .font(.callout)
+                    .padding(.vertical, 5)
+                    .padding(.horizontal)
+                    .background {
+                        Capsule()
+                            .fill(.gray.opacity(0.3))
+                    }
+                
+                Spacer()
+                
+                // MARK: Edit button
+                if !task.isCompleted {
+                    Button {
+                        taskViewModel.editTask = task
+                        taskViewModel.openEditTask = true
+                        taskViewModel.setupTask()
+                    } label: {
+                        Image(systemName: "square.and.pencil")
+                            .foregroundColor(.black)
+                    }
+                }
+            }
+            
+            Text(task.title ?? "")
+                .font(.title2.bold())
+                .foregroundColor(.black)
+                .padding(.vertical, 10)
+            
+            HStack(alignment: .bottom, spacing: 0) {
+                VStack(alignment: .leading, spacing: 10) {
+                    Label {
+                        Text((task.deadline ?? Date()).formatted(date: .long, time: .omitted))
+                    } icon: {
+                        Image(systemName: "calendar")
+                    }
+                    .font(.caption)
+                    
+                    Label {
+                        Text((task.deadline ?? Date()).formatted(date: .omitted, time: .shortened))
+                    } icon: {
+                        Image(systemName: "clock")
+                    }
+                    .font(.caption)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                
+                if !task.isCompleted {
+                    Button {
+                        // MARK: Updating Core Data
+                        task.isCompleted.toggle()
+                        try? env.managedObjectContext.save()
+                    } label: {
+                        Circle()
+                            .strokeBorder(.black, lineWidth: 1.5)
+                            .frame(width: 25, height: 25)
+                            .contentShape(Circle())
+                    }
+                }
+            }
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background {
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .fill(Color(task.color ?? "Yellow"))
         }
     }
 }
