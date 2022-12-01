@@ -19,6 +19,7 @@
 		87F055E92937BD2100CE5D39 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F055E82937BD2100CE5D39 /* HomeView.swift */; };
 		87F055EB2937BF7A00CE5D39 /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F055EA2937BF7A00CE5D39 /* TaskViewModel.swift */; };
 		87F055ED2937CBF800CE5D39 /* AddTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F055EC2937CBF800CE5D39 /* AddTaskView.swift */; };
+		87F8B0E829393AD500E578F4 /* DynamicFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F8B0E729393AD500E578F4 /* DynamicFilterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		87F055E82937BD2100CE5D39 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		87F055EA2937BF7A00CE5D39 /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
 		87F055EC2937CBF800CE5D39 /* AddTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskView.swift; sourceTree = "<group>"; };
+		87F8B0E729393AD500E578F4 /* DynamicFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicFilterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				87F055B72937B96200CE5D39 /* ContentView.swift */,
 				87F055E82937BD2100CE5D39 /* HomeView.swift */,
 				87F055EC2937CBF800CE5D39 /* AddTaskView.swift */,
+				87F8B0E729393AD500E578F4 /* DynamicFilterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87F8B0E829393AD500E578F4 /* DynamicFilterView.swift in Sources */,
 				87F055BF2937B96300CE5D39 /* Persistence.swift in Sources */,
 				87F055ED2937CBF800CE5D39 /* AddTaskView.swift in Sources */,
 				87F055EB2937BF7A00CE5D39 /* TaskViewModel.swift in Sources */,
